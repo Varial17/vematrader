@@ -1,20 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>vematrader</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 2em; }
-        header { text-align: center; margin-bottom: 2em; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VEMA Trader</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
-<body>
-    <header>
-        <h1>vematrader</h1>
-    </header>
-    <main>
-        <p>This repository currently contains minimal information. Stay tuned for more updates.</p>
-    </main>
+<body class="bg-gray-50 text-gray-800">
+  <div id="root"></div>
+  <script type="text/babel">
+    const testimonials = [
+      { name: 'Anthea', quote: 'VEMA Trader has streamlined my trading workflow.' },
+      { name: 'Ryan', quote: 'I love how easy it is to manage risk.' },
+      { name: 'Tim', quote: 'The automation features are second to none.' },
+      { name: 'Jamie & Joel', quote: 'VEMA keeps us disciplined and organised.' }
+    ];
+
+    function Hero() {
+      return (
+        <section className="bg-white py-16">
+          <div className="max-w-6xl mx-auto px-4 text-center">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">Trade smarter with VEMA Trader</h1>
+            <p className="text-lg md:text-2xl mb-8">Stay in control of your strategy while VEMA handles the risk management, trade execution and journaling.</p>
+            <div className="flex justify-center gap-4">
+              <a href="#demo" className="px-6 py-3 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700">View Demo</a>
+              <a href="#signup" className="px-6 py-3 bg-green-600 text-white rounded-md shadow hover:bg-green-700">Sign Up Now</a>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function Feature({ icon, title }) {
+      return (
+        <div className="flex flex-col items-center text-center p-4">
+          <div className="h-12 w-12 mb-3" dangerouslySetInnerHTML={{__html: icon}} />
+          <h3 className="font-semibold">{title}</h3>
+        </div>
+      );
+    }
+
+    const icons = {
+      risk: `<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 8c1.657 0 3 1.343 3 3v3h3l-4 4-4-4h3v-3a1 1 0 00-1-1 1 1 0 00-1 1v4H9l-4-4 4-4h3V7a5 5 0 015 5v3'></path></svg>`,
+      size: `<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 6h16M4 10h16M4 14h10M4 18h6'></path></svg>`,
+      execution: `<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 17h8m0 0l-3-3m3 3l-3 3m-6-6V5a2 2 0 10-4 0v9a2 2 0 104 0z'></path></svg>`,
+      journal: `<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 7h10M7 11h10M7 15h6m6-9v10a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2h11l4 4z'></path></svg>`,
+      tv: `<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 6h16M4 10h16M4 14h16M4 18h16'></path></svg>`
+    };
+
+    function Features() {
+      const list = [
+        { icon: icons.risk, title: 'Automated risk management' },
+        { icon: icons.size, title: 'Position sizing' },
+        { icon: icons.execution, title: 'Trade execution' },
+        { icon: icons.journal, title: 'Trade journaling' },
+        { icon: icons.tv, title: 'TradingView integration' }
+      ];
+      return (
+        <section className="py-16 bg-gray-100" id="features">
+          <div className="max-w-6xl mx-auto px-4 grid grid-cols-2 md:grid-cols-5 gap-8 text-blue-600">
+            {list.map((f,i) => <Feature key={i} icon={f.icon} title={f.title} />)}
+          </div>
+        </section>
+      );
+    }
+
+    function HowItWorks() {
+      return (
+        <section className="py-16" id="how">
+          <div className="max-w-4xl mx-auto px-4 text-center">
+            <h2 className="text-3xl font-bold mb-4">How It Works</h2>
+            <p className="text-lg">Visualise, execute, monitor and analyse trades from one dashboard. Automate routine tasks and remove emotion from trading decisions.</p>
+          </div>
+        </section>
+      );
+    }
+
+    function Testimonials() {
+      const [index, setIndex] = React.useState(0);
+      const next = () => setIndex((index + 1) % testimonials.length);
+      const prev = () => setIndex((index - 1 + testimonials.length) % testimonials.length);
+      const t = testimonials[index];
+      return (
+        <section className="py-16 bg-gray-100" id="testimonials">
+          <div className="max-w-xl mx-auto px-4 text-center">
+            <h2 className="text-3xl font-bold mb-8">Testimonials</h2>
+            <div className="bg-white p-6 rounded shadow">
+              <p className="italic mb-4">"{t.quote}"</p>
+              <p className="font-semibold">- {t.name}</p>
+            </div>
+            <div className="flex justify-center mt-6 gap-4">
+              <button onClick={prev} className="px-3 py-1 bg-gray-200 rounded">Prev</button>
+              <button onClick={next} className="px-3 py-1 bg-gray-200 rounded">Next</button>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function CTA() {
+      return (
+        <section className="py-16 bg-blue-600 text-white text-center" id="cta">
+          <h2 className="text-3xl font-bold mb-4">Start trading on your own terms</h2>
+          <p className="mb-6">Free up time and trade smarter with VEMA Trader.</p>
+          <a href="#signup" className="px-6 py-3 bg-white text-blue-600 rounded-md shadow">Get Started</a>
+        </section>
+      );
+    }
+
+    function Footer() {
+      return (
+        <footer className="bg-gray-800 text-gray-300 py-12" id="footer">
+          <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+              <h3 className="font-bold mb-2">About</h3>
+              <ul className="space-y-1">
+                <li><a href="#" className="hover:text-white">About</a></li>
+                <li><a href="#demo" className="hover:text-white">Demo</a></li>
+                <li><a href="#" className="hover:text-white">Blog</a></li>
+                <li><a href="#" className="hover:text-white">Support</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-bold mb-2">Newsletter</h3>
+              <form className="flex flex-col space-y-2">
+                <input type="email" placeholder="Email" className="p-2 rounded text-gray-800" />
+                <button type="submit" className="px-4 py-2 bg-blue-600 rounded text-white">Subscribe</button>
+              </form>
+            </div>
+            <div className="md:col-span-2">
+              <p className="mb-2">We acknowledge the Traditional Custodians of the land and pay respects to Elders past, present and emerging.</p>
+              <div className="flex space-x-4 mt-4">
+                <a href="#" aria-label="Twitter" className="hover:text-white">Twitter</a>
+                <a href="#" aria-label="Facebook" className="hover:text-white">Facebook</a>
+                <a href="#" aria-label="LinkedIn" className="hover:text-white">LinkedIn</a>
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-gray-700 mt-8 pt-4 text-center text-sm">
+            <a href="#" className="hover:text-white">Privacy Policy</a> |
+            <a href="#" className="hover:text-white">Terms of Use</a>
+          </div>
+        </footer>
+      );
+    }
+
+    function App() {
+      return (
+        <div>
+          <Hero />
+          <Features />
+          <HowItWorks />
+          <Testimonials />
+          <CTA />
+          <Footer />
+        </div>
+      );
+    }
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
 </body>
 </html>
