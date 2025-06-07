@@ -4,12 +4,33 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VEMA Trader</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            accent: '#22d3ee'
+          }
+        }
+      }
+    }
+  </script>
   <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in {
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-900 text-gray-100" style="font-family: 'Inter', sans-serif;">
   <div id="root"></div>
   <script type="text/babel">
     const testimonials = [
@@ -19,15 +40,31 @@
       { name: 'Jamie & Joel', quote: 'VEMA keeps us disciplined and organised.' }
     ];
 
+    function Header() {
+      return (
+        <header className="bg-gray-900 fixed w-full z-10">
+          <div className="max-w-6xl mx-auto px-4 flex justify-between items-center py-4">
+            <span className="font-bold text-white">VEMA Trader</span>
+            <nav className="space-x-6 hidden md:block">
+              <a href="#features" className="hover:text-accent">Features</a>
+              <a href="#how" className="hover:text-accent">How It Works</a>
+              <a href="#testimonials" className="hover:text-accent">Testimonials</a>
+              <a href="#cta" className="ml-4 px-4 py-2 bg-accent text-gray-900 rounded-md hover:bg-opacity-80">Get Started</a>
+            </nav>
+          </div>
+        </header>
+      );
+    }
+
     function Hero() {
       return (
-        <section className="bg-white py-16">
-          <div className="max-w-6xl mx-auto px-4 text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">Trade smarter with VEMA Trader</h1>
-            <p className="text-lg md:text-2xl mb-8">Stay in control of your strategy while VEMA handles the risk management, trade execution and journaling.</p>
+        <section className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 py-24">
+          <div className="max-w-6xl mx-auto px-4 text-center fade-in">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white">Trade smarter with VEMA Trader</h1>
+            <p className="text-lg md:text-2xl mb-8 text-gray-300">Stay in control of your strategy while VEMA handles the risk management, trade execution and journaling.</p>
             <div className="flex justify-center gap-4">
-              <a href="#demo" className="px-6 py-3 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700">View Demo</a>
-              <a href="#signup" className="px-6 py-3 bg-green-600 text-white rounded-md shadow hover:bg-green-700">Sign Up Now</a>
+              <a href="#demo" className="px-6 py-3 border border-accent text-accent rounded-md hover:bg-accent hover:text-gray-900 transition">View Demo</a>
+              <a href="#signup" className="px-6 py-3 bg-accent text-gray-900 rounded-md hover:bg-opacity-80 transition">Sign Up Now</a>
             </div>
           </div>
         </section>
@@ -37,8 +74,8 @@
     function Feature({ icon, title }) {
       return (
         <div className="flex flex-col items-center text-center p-4">
-          <div className="h-12 w-12 mb-3" dangerouslySetInnerHTML={{__html: icon}} />
-          <h3 className="font-semibold">{title}</h3>
+          <div className="h-12 w-12 mb-3 text-accent" dangerouslySetInnerHTML={{__html: icon}} />
+          <h3 className="font-semibold text-white">{title}</h3>
         </div>
       );
     }
@@ -60,8 +97,8 @@
         { icon: icons.tv, title: 'TradingView integration' }
       ];
       return (
-        <section className="py-16 bg-gray-100" id="features">
-          <div className="max-w-6xl mx-auto px-4 grid grid-cols-2 md:grid-cols-5 gap-8 text-blue-600">
+        <section className="py-16 bg-gray-800" id="features">
+          <div className="max-w-6xl mx-auto px-4 grid grid-cols-2 md:grid-cols-5 gap-8 text-accent">
             {list.map((f,i) => <Feature key={i} icon={f.icon} title={f.title} />)}
           </div>
         </section>
@@ -70,10 +107,10 @@
 
     function HowItWorks() {
       return (
-        <section className="py-16" id="how">
+        <section className="py-16 bg-gray-900" id="how">
           <div className="max-w-4xl mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold mb-4">How It Works</h2>
-            <p className="text-lg">Visualise, execute, monitor and analyse trades from one dashboard. Automate routine tasks and remove emotion from trading decisions.</p>
+            <h2 className="text-3xl font-bold mb-4 text-white">How It Works</h2>
+            <p className="text-lg text-gray-300">Visualise, execute, monitor and analyse trades from one dashboard. Automate routine tasks and remove emotion from trading decisions.</p>
           </div>
         </section>
       );
@@ -85,16 +122,16 @@
       const prev = () => setIndex((index - 1 + testimonials.length) % testimonials.length);
       const t = testimonials[index];
       return (
-        <section className="py-16 bg-gray-100" id="testimonials">
+        <section className="py-16 bg-gray-800" id="testimonials">
           <div className="max-w-xl mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold mb-8">Testimonials</h2>
-            <div className="bg-white p-6 rounded shadow">
-              <p className="italic mb-4">"{t.quote}"</p>
-              <p className="font-semibold">- {t.name}</p>
+            <h2 className="text-3xl font-bold mb-8 text-white">Testimonials</h2>
+            <div className="bg-gray-900 p-6 rounded shadow">
+              <p className="italic mb-4 text-gray-300">"{t.quote}"</p>
+              <p className="font-semibold text-white">- {t.name}</p>
             </div>
             <div className="flex justify-center mt-6 gap-4">
-              <button onClick={prev} className="px-3 py-1 bg-gray-200 rounded">Prev</button>
-              <button onClick={next} className="px-3 py-1 bg-gray-200 rounded">Next</button>
+              <button onClick={prev} className="px-3 py-1 border border-accent text-accent rounded hover:bg-accent hover:text-gray-900 transition">Prev</button>
+              <button onClick={next} className="px-3 py-1 border border-accent text-accent rounded hover:bg-accent hover:text-gray-900 transition">Next</button>
             </div>
           </div>
         </section>
@@ -103,17 +140,17 @@
 
     function CTA() {
       return (
-        <section className="py-16 bg-blue-600 text-white text-center" id="cta">
+        <section className="py-16 bg-accent text-gray-900 text-center" id="cta">
           <h2 className="text-3xl font-bold mb-4">Start trading on your own terms</h2>
           <p className="mb-6">Free up time and trade smarter with VEMA Trader.</p>
-          <a href="#signup" className="px-6 py-3 bg-white text-blue-600 rounded-md shadow">Get Started</a>
+          <a href="#signup" className="px-6 py-3 bg-gray-900 text-accent rounded-md hover:bg-gray-800 transition">Get Started</a>
         </section>
       );
     }
 
     function Footer() {
       return (
-        <footer className="bg-gray-800 text-gray-300 py-12" id="footer">
+        <footer className="bg-gray-900 text-gray-300 py-12" id="footer">
           <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <h3 className="font-bold mb-2">About</h3>
@@ -128,7 +165,7 @@
               <h3 className="font-bold mb-2">Newsletter</h3>
               <form className="flex flex-col space-y-2">
                 <input type="email" placeholder="Email" className="p-2 rounded text-gray-800" />
-                <button type="submit" className="px-4 py-2 bg-blue-600 rounded text-white">Subscribe</button>
+                <button type="submit" className="px-4 py-2 bg-accent text-gray-900 rounded hover:bg-opacity-80 transition">Subscribe</button>
               </form>
             </div>
             <div className="md:col-span-2">
@@ -151,12 +188,15 @@
     function App() {
       return (
         <div>
-          <Hero />
-          <Features />
-          <HowItWorks />
-          <Testimonials />
-          <CTA />
-          <Footer />
+          <Header />
+          <div className="pt-16">
+            <Hero />
+            <Features />
+            <HowItWorks />
+            <Testimonials />
+            <CTA />
+            <Footer />
+          </div>
         </div>
       );
     }
